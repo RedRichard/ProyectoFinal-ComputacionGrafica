@@ -1,15 +1,1 @@
-﻿  Shader_light.cpp
-c:\users\cgi02\desktop\práctica10v1.0\openglcourseapp\shader_light.cpp(202): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-c:\users\cgi02\desktop\práctica10v1.0\openglcourseapp\shader_light.cpp(215): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-  Generando código...
-  Compilando...
-  practica10_alumno.cpp
-c:\users\cgi02\desktop\práctica10v1.0\openglcourseapp\window.h(17): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
-c:\users\cgi02\desktop\práctica10v1.0\openglcourseapp\window.h(18): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
-c:\users\cgi02\desktop\práctica10v1.0\openglcourseapp\practica10_alumno.cpp(339): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\cgi02\desktop\práctica10v1.0\openglcourseapp\practica10_alumno.cpp(373): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  Texture.cpp
-  Skybox.cpp
-  Generando código...
-  OpenGLCourseApp.vcxproj -> C:\Users\CGI02\Desktop\Práctica10v1.0\Debug\OpenGLCourseApp.exe
-  OpenGLCourseApp.vcxproj -> C:\Users\CGI02\Desktop\Práctica10v1.0\Debug\OpenGLCourseApp.pdb (Partial PDB)
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(67,5): error MSB8020: The build tools for v142 (Platform Toolset = 'v142') cannot be found. To build using the v142 build tools, please install v142 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
