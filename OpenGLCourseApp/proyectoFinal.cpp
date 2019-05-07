@@ -51,6 +51,7 @@ Texture dirtTexture;
 Texture plainTexture;
 Texture dadoTexture;
 Texture pisoTexture;
+Texture pastoTexture;
 
 //materiales
 Material Material_brillante;
@@ -299,6 +300,26 @@ void CreateShaders()
 	shaderList.push_back(*shader1);
 }
 
+void GenerarCamino(float posX, float posY, float posZ, float scaleX, float scaleY, float scaleZ, float rotate, Model &Textura, glm::mat4 &model, GLuint &uniformModel, GLuint &uniformSpecularIntensity, GLuint &uniformShininess) {
+	model = glm::mat4(1.0);
+	model = glm::translate(model, glm::vec3(posX, posY, posZ));
+	model = glm::scale(model, glm::vec3(scaleX, scaleY, scaleZ));
+	model = glm::rotate(model, rotate * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	Textura.RenderModel();
+}
+
+void GenerarObjeto(Model &Modelo, float posX, float posY, float posZ, float scaleX, float scaleY, float scaleZ, float rotate, float ejeX, float ejeY, float ejeZ, glm::mat4& model, GLuint& uniformModel, GLuint& uniformSpecularIntensity, GLuint& uniformShininess) {
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(posX, posY, posZ));
+	model = glm::scale(model, glm::vec3(scaleX, scaleY, scaleZ));
+	model = glm::rotate(model, rotate * toRadians, glm::vec3(ejeX, ejeY, ejeZ));
+	glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+	Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+	Modelo.RenderModel();
+}
+
 int main()
 {
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
@@ -320,6 +341,8 @@ int main()
 	dadoTexture.LoadTextureA();
 	pisoTexture = Texture("Textures/plain.png");
 	pisoTexture.LoadTextureA();
+	pastoTexture = Texture("Textures/pasto.jpg");
+	pastoTexture.LoadTexture();
 	wc = Texture("Textures/wc.png");
 	wc.LoadTexture();
 	Material_brillante = Material(4.0f, 256);
@@ -431,12 +454,20 @@ int main()
 
 
 	std::vector<std::string> skyboxFaces;
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");	//Derecha		EL ORDEN ES MUY IMPORTANTE
+	skyboxFaces.push_back("Textures/Skybox/nightsky_rt.tga");	//Derecha		EL ORDEN ES MUY IMPORTANTE
+	skyboxFaces.push_back("Textures/Skybox/nightsky_lf.tga");	//Izquierda
+	skyboxFaces.push_back("Textures/Skybox/nightsky_dn.tga");	//Abajo
+	skyboxFaces.push_back("Textures/Skybox/nightsky_up.tga");	//Arriba
+	skyboxFaces.push_back("Textures/Skybox/nightsky_bk.tga");	//Atras
+	skyboxFaces.push_back("Textures/Skybox/nightsky_ft.tga");	//Adelante
+
+	/*skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");	//Derecha		EL ORDEN ES MUY IMPORTANTE
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_lf.tga");	//Izquierda
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_dn.tga");	//Abajo
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_up.tga");	//Arriba
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_bk.tga");	//Atras
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_ft.tga");	//Adelante
+	*/
 
 	/*skyboxFaces.push_back("Textures/Skybox/cupertin-lake-night_rt.tga");
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake-night_lf.tga");
@@ -494,13 +525,13 @@ int main()
 
 		glm::mat4 model(1.0);
 
-		//Piso
+		//Pasto
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, -50.0f));
 		model = glm::scale(model, glm::vec3(8.0f, 1.0f, 8.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		//pisoTexture.UseTexture();
-		dirtTexture.UseTexture();
+		pastoTexture.UseTexture();
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
@@ -563,8 +594,8 @@ int main()
 		glm::mat4 modelTempTazas(1.0);
 		//ESTRUCTURA:
 		model = glm::mat4(1.0);
-		modelTempTazas = model = glm::translate(model, glm::vec3(-41.0f, -2.0f, -30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		modelTempTazas = model = glm::translate(model, glm::vec3(-41.0f, -2.0f, -95.0f));
+		modelTempTazas = model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -681,8 +712,8 @@ int main()
 		glm::mat4 modelTempSillas(1.0);
 		//BASE GIRATORIA:
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(31.0f, -2.0f, 10.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(31.0f, -2.0f, -95.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		modelTempSillas = model;
@@ -699,6 +730,8 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Sillas_EstructuraGiro.RenderModel();
+
+		//---------------------------------------------------------------------------------------------
 
 		//Relleno
 		//Lamparas
@@ -744,137 +777,107 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Lampara.RenderModel();
 
-		//Bardas
+		//MUROS
+		//Frente
+		GenerarObjeto(Muro, 75.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 65.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 55.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 45.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 35.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 25.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 15.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 5.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f,   0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -15.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -25.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -35.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -45.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -55.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -65.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -75.0f, -2.0f, 30.0f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		//Atras
+		GenerarObjeto(Muro,  75.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro,  65.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro,  55.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro,  45.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro,  35.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro,  25.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro,  15.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro,   5.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro,  -5.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -15.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -25.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -35.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -45.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -55.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -65.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -75.0f, -2.0f, -126.5f, 0.85f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		//Izquierda
+		GenerarObjeto(Muro, -79.2f, -2.0f, 23.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, 12.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, 1.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -10.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -21.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -32.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -43.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -54.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -65.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -76.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -87.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -98.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -109.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, -79.2f, -2.0f, -120.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		//Derecha
+		GenerarObjeto(Muro, 79.2f, -2.0f, 23.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, 12.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, 1.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -10.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -21.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -32.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -43.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -54.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -65.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -76.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -87.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -98.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -109.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Muro, 79.2f, -2.0f, -120.0f, 0.85f, 1.0f, 1.0f, 90.0f, 0.0f, 1.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(75.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(0.85f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
+		//-------------------------------------------------------------------------------------------
+		
+		//CAMINO
+		//Camino principal
+		GenerarObjeto(Pasto, -5.0f, -2.0f, 26.0f, 0.03f, 0.03f, 0.03f, -90.0f,  1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, 17.0f, 0.03f, 0.03f, 0.03f, -90.0f,  1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, 8.0f, 0.03f, 0.03f, 0.03f, -90.0f,   1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -1.0f, 0.03f, 0.03f, 0.03f, -90.0f,  1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -10.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -19.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -28.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -37.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -46.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -55.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -64.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -5.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(65.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
+		//Camino juegos
+		GenerarObjeto(Pasto, 4.0f, -2.0f,  -73.0f, 0.03f, 0.03f, 0.03f, -90.0f,  1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, 13.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, 22.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, 31.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, 40.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, 49.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, 58.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, 67.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(55.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(45.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(35.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(25.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(15.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(5.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-15.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-25.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-35.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-45.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-55.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-65.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-75.0f, -2.0f, 30.0f));
-		model = glm::scale(model, glm::vec3(0.85f, 1.0f, 1.0f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Muro.RenderModel();
-
-		//Pastos
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-5.0f, -2.0f, 15.8f));
-		model = glm::scale(model, glm::vec3(0.0285f, 0.01f, 0.1f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Pasto.RenderModel();
-
+		GenerarObjeto(Pasto, -14.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -23.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -32.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -41.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -50.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -59.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		GenerarObjeto(Pasto, -68.0f, -2.0f, -73.0f, 0.03f, 0.03f, 0.03f, -90.0f, 1.0f, 0.0f, 0.0f, model, uniformModel, uniformSpecularIntensity, uniformShininess);
+		
+		/*
 		//Kilahuea
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-10.0f, 25.7f, -60.0f));
@@ -882,7 +885,7 @@ int main()
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Kilahuea.RenderModel();
+		Kilahuea.RenderModel();*/
 
 		//Baños
 		model = glm::mat4(1.0);
@@ -1004,6 +1007,7 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Banca.RenderModel();
 
+		/*
 		//Carpa de circo
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-5.0f, -2.0f, -40.0f));
@@ -1011,7 +1015,7 @@ int main()
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Carpa.RenderModel();
+		Carpa.RenderModel();*/
 
 
 		//Carrusel
