@@ -1,12 +1,29 @@
-﻿  proyectoFinal.cpp
+﻿  Shader_light.cpp
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Shader_light.cpp(202): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Shader_light.cpp(201): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Shader_light.cpp(215): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Shader_light.cpp(214): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Shader_light.cpp(213): warning C4244: 'argument': conversion from 'GLuint' to 'GLfloat', possible loss of data
+  Skybox.cpp
+  SpotLight.cpp
+  Window.cpp
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.h(17): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.h(18): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.cpp(196): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.cpp(197): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.cpp(201): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.cpp(202): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.cpp(204): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.cpp(205): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+  proyectoFinal.cpp
 D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.h(17): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
 D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\Window.h(18): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
 D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\proyectoFinal.cpp(716): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
 D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\proyectoFinal.cpp(837): warning C4018: '<': signed/unsigned mismatch
 D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\OpenGLCourseApp\proyectoFinal.cpp(842): warning C4018: '<': signed/unsigned mismatch
   Generating code
-  1 of 1023 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  0 of 1023 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    8 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   OpenGLCourseApp.vcxproj -> D:\MisArchivos\Computación Gráfica\Laboratorio\ProyectoFinal\Release\OpenGLCourseApp.exe

@@ -70,7 +70,7 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	{
 		position += right * velocity;
 	}
-	printf("\nx: %f, y: %f, z: %f", position.x, position.y, position.z);
+	//printf("\nx: %f, y: %f, z: %f", position.x, position.y, position.z);
 }
 
 void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
