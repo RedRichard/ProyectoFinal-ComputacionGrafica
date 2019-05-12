@@ -16,9 +16,22 @@ public:
 	void keyControl(bool* keys, GLfloat deltaTime);
 	void mouseControl(GLfloat xChange, GLfloat yChange);
 
+	void setCameraPosition(glm::vec3 newPos) { position = newPos; }
+	void setCameraFront(glm::vec3 newFront) { front = newFront; }
+
+	bool getTriggerTazas() { return triggerTazas; };
+	bool getTriggerSillas() { return triggerSillas; };
+	bool getTriggerLucesPoint() { return triggerLucesPoint;	};
+	bool getTriggerLucesDir() { return triggerLucesDir; };
+
+	void checkTriggers();
+
 	glm::vec3 getCameraPosition();
 	glm::vec3 getCameraDirection();
 	glm::mat4 calculateViewMatrix();
+
+	GLfloat yaw;
+	GLfloat pitch;
 
 	~Camera();
 
@@ -29,11 +42,10 @@ private:
 	glm::vec3 right;
 	glm::vec3 worldUp;
 
-	GLfloat yaw;
-	GLfloat pitch;
-
 	GLfloat moveSpeed;
 	GLfloat turnSpeed;
+
+	bool triggerTazas = false, triggerSillas = false, triggerLucesDir = false, triggerLucesPoint = false;
 
 	void update();
 };

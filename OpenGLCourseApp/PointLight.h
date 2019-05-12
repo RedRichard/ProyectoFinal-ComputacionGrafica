@@ -15,6 +15,11 @@ public:
 		GLfloat diffuseIntensityLocation, GLfloat positionLocation,
 		GLfloat constantLocation, GLfloat linearLocation, GLfloat exponentLocation);
 
+	void PrenderLuz();
+	void ApagarLuz();
+
+	bool estadoLuz;
+
 	~PointLight();
 
 protected:

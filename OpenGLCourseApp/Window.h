@@ -16,8 +16,13 @@ public:
 
 	GLfloat getBufferWidth() { return bufferWidth; }
 	GLfloat getBufferHeight() { return bufferHeight; }
-	GLfloat mueveSillas() { return keys[GLFW_KEY_2]; }
-	GLfloat mueveTazas() { return keys[GLFW_KEY_3]; }
+	GLfloat mueveSillas() { return movSillas; }
+	GLfloat mueveTazas() { return movTazas; }
+	bool getEstadoLucesPuntuales() { return estadoLucesPuntuales; };
+	bool getEstadoLucesDir() { return estadoLucesDir; };
+	int getEstadoCamara() { return estadoCamara; };
+	bool getJustChangedCamara(){ return justChangedCamara; };
+	void doneJustChangedCamera() { justChangedCamara = false; };
 	bool* getsKeys() { return keys; }
 	bool getShouldClose() { return glfwWindowShouldClose(mainWindow); }
 
@@ -39,7 +44,9 @@ private:
 	bool keys[1024];
 
 	GLfloat lastX, lastY, xChange, yChange;
-	bool mouseFirstMoved;
+	bool mouseFirstMoved, estadoLucesPuntuales = true, estadoLucesDir = true, movTazas = false, movSillas = false, justChangedCamara = false;
+
+	int estadoCamara = 0;
 
 	void CreateCallBacks();
 	static void handleKeys(GLFWwindow *window, int key, int code, int action, int mode);

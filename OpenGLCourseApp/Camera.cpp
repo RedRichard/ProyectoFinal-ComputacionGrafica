@@ -10,10 +10,41 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	pitch = startPitch;
 	front = glm::vec3(0.0f, 0.0f, -1.0f);
 
-	moveSpeed = startMoveSpeed*5;
+	moveSpeed = startMoveSpeed*15;
 	turnSpeed = startTurnSpeed;
 
 	update();
+}
+
+void Camera::checkTriggers() {
+	if (position.x > 19.0f && position.x < 55.0f && position.y > 0.0f && position.y < 20.0f && position.z < -55.0f && position.z > -123.0f) {
+		triggerSillas = true;
+	}
+	else
+	{
+		triggerSillas = false;
+	}
+	if (position.x < 15.0f && position.x > -60.0f && position.y > 0.0f && position.y < 20.0f && position.z < -55.0f && position.z > -123.0f) {
+		triggerTazas = true;
+	}
+	else
+	{
+		triggerTazas = false;
+	}
+	if (position.x < 5.0f && position.x > -15.0f && position.y > 0.0f && position.y < 20.0f && position.z < 24.0f && position.z > -67.0f) {
+		triggerLucesPoint = true;
+	}
+	else
+	{
+		triggerLucesPoint = false;
+	}
+	if (position.x < 65.0f && position.x > -65.0f && position.y > 0.0f && position.y < 20.0f && position.z < -68.0f && position.z > -100.0f) {
+		triggerLucesDir = true;
+	}
+	else
+	{
+		triggerLucesDir = false;
+	}
 }
 
 void Camera::keyControl(bool* keys, GLfloat deltaTime)
@@ -39,6 +70,7 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	{
 		position += right * velocity;
 	}
+	printf("\nx: %f, y: %f, z: %f", position.x, position.y, position.z);
 }
 
 void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
@@ -60,6 +92,7 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
 	}
 
 	update();
+	//printf("yaw: %f, pitch: %f\n", yaw, pitch);
 }
 
 glm::mat4 Camera::calculateViewMatrix()

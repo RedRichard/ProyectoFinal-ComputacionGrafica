@@ -112,6 +112,65 @@ void Window::handleKeys(GLFWwindow *window, int key, int code, int action, int m
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 
+	//JUEGOS
+	if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
+		if (theWindow->movTazas == false)
+			theWindow->movTazas = true;
+		else
+			theWindow->movTazas = false;
+	}
+
+	if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
+		if (theWindow->movSillas == false)
+			theWindow->movSillas = true;
+		else
+			theWindow->movSillas = false;
+	}
+
+	//LUCES
+	if (key == GLFW_KEY_O && action == GLFW_PRESS) {
+		if (theWindow->estadoLucesPuntuales == false)
+			theWindow->estadoLucesPuntuales = true;
+		else
+			theWindow->estadoLucesPuntuales = false;
+	}
+
+	if (key == GLFW_KEY_L && action == GLFW_PRESS) {
+		if (theWindow->estadoLucesDir == false)
+			theWindow->estadoLucesDir = true;
+		else
+			theWindow->estadoLucesDir = false;
+	}
+
+	//CAMARAS
+	if (key == GLFW_KEY_E && action == GLFW_PRESS) {
+		theWindow->justChangedCamara = true;
+		theWindow->estadoCamara = 0;
+	}
+
+	if (key == GLFW_KEY_R && action == GLFW_PRESS) {
+		theWindow->justChangedCamara = true;
+		theWindow->estadoCamara = 1;
+	}
+
+	if (key == GLFW_KEY_T && action == GLFW_PRESS) {
+		theWindow->justChangedCamara = true;
+		theWindow->estadoCamara = 2;
+	}
+
+	if (key == GLFW_KEY_Y && action == GLFW_PRESS) {
+		theWindow->justChangedCamara = true;
+		theWindow->estadoCamara = 3;
+	}
+	if (key == GLFW_KEY_U && action == GLFW_PRESS) {
+		theWindow->justChangedCamara = true;
+		theWindow->estadoCamara = 4;
+	}
+	if (key == GLFW_KEY_I && action == GLFW_PRESS) {
+		theWindow->justChangedCamara = true;
+		theWindow->estadoCamara = 5;
+	}
+
 	if (key >= 0 && key < 1024)
 	{
 		if (action == GLFW_PRESS)
